@@ -1,0 +1,66 @@
+apiVersion: apps/v1   #api版本
+kind: Deployment      #对象类型
+metadata:             #元信息标识
+  name: java-test
+  labels:             #自定义Deployment绑定的标签
+    app: java-test
+spec:                 #期待运行状态
+  replicas: 1         #部署实例数
+  selector:
+    matchLabels:
+      app: java-test
+  template:           #pod
+    metadata:
+      labels:         #与spec.selector.matchLabels相同
+        app: java-test
+    spec:             #pod容器期望的状态
+      containers:
+        - name: java-test
+          image: ${IMAGE_NAME}
+          imagePullPolicy: IfNotPresent
+          command:
+            - java
+          args:
+              - '-jar'
+              - '-Djasypt.encryptor.password=secret'
+              - app.jar
+          env:
+            - name: ENV
+              value: ${ENV}
+          resources:
+            limits:
+              cpu: 1
+              memory: 2000Mi
+            requests:
+              cpu: 0.1
+              memory: 100Mi
+          livenessProbe:
+            httpGet:
+              path: /v1/ecoding/health
+              port: 8080
+            initialDelaySeconds: 60
+          readinessProbe:
+            httpGet:
+              path: /v1/ecoding/health
+              port: 8080
+            initialDelaySeconds: 60
+      imagePullSecrets:
+        - name: deploy-regcred
+      restartPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: java-test
+  labels:
+    service: java-test
+spec:
+  selector:            #匹配pod标签
+    app: java-test
+  type: ClusterIP     #svc类型，ExternalName, ClusterIP, NodePort, and LoadBalancer
+  ports:
+    - name: java-test-port
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
