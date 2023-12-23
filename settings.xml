@@ -34,7 +34,7 @@
       <id>beaconfire-maven-central</id>
       <username>aws</username>
       <password>
-        {USER_CODEARTIFACT_AUTH_TOKEN"}
+        ${USER_CODEARTIFACT_AUTH_TOKEN"}
       </password>
     </server>
   </servers>
