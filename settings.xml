@@ -1,0 +1,56 @@
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                      http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+  <profiles>
+    <profile>
+      <id>beaconfire-maven-central</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <repositories>
+        <repository>
+          <id>beaconfire-maven-central</id>
+          <url>https://beaconfire-795824851990.d.codeartifact.us-east-1.amazonaws.com/maven/maven-central/</url>
+        </repository>
+        <repository>
+            <id>confluent</id>
+            <name>Confluent</name>
+            <url>https://packages.confluent.io/maven/</url>
+        </repository>
+      </repositories>
+      <pluginRepositories>
+        <pluginRepository>
+            <id>confluent</id>
+            <url>https://packages.confluent.io/maven/</url>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>
+  </profiles>
+
+  <servers>
+    <server>
+      <id>beaconfire-maven-central</id>
+      <username>aws</username>
+      <password>
+        {USER_CODEARTIFACT_AUTH_TOKEN"}
+      </password>
+    </server>
+  </servers>
+
+  <mirrors>
+    <mirror>
+      <id>beaconfire-maven-central</id>
+      <name>beaconfire-maven-central</name>
+      <url>https://beaconfire-795824851990.d.codeartifact.us-east-1.amazonaws.com/maven/maven-central/</url>
+      <mirrorOf>beaconfire-maven-central</mirrorOf>
+    </mirror>
+    <mirror>
+      <id>confluent</id>
+      <name>confluent</name>
+      <url>https://packages.confluent.io/maven/</url>
+      <mirrorOf>confluent</mirrorOf>
+    </mirror>
+  </mirrors>
+</settings>

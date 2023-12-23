@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: e-coding
+  profiles:
+    active: local
+  cloud:
+    config:
+      label: main
+  config:
+    import: optional:configserver:http://10.2.0.12:31003
